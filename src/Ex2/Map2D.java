@@ -17,7 +17,8 @@ package Ex2;
  * @author boaz.ben-moshe
  * Do NOT change this interface!!
  */
-public interface Map2D {
+public interface Map2D
+{
     /**
      * Construct a 2D w*h matrix of integers.
      * @param w the width of the underlying 2D array.
