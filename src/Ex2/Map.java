@@ -24,13 +24,29 @@ public class Map implements Map2D, Serializable
      * @param h
      * @param v
      */
+
+
+    /**
+     * Creates a new map with size w by h.
+     * All cells are set to the value v.
+     * @param w map width in cells.
+     * @param h map height in cells.
+     * @param v initial value for all cells.
+     */
     public Map(int w, int h, int v)
     {
         init(w, h, v);
     }
+
     /**
      * Constructs a square map (size*size).
      * @param size
+     */
+
+    /**
+     * Creates a new square map with size by size cells.
+     * All cells are initialized to zero.
+     * @param size width and height of the map.
      */
     public Map(int size)
     {
@@ -41,10 +57,32 @@ public class Map implements Map2D, Serializable
      * Constructs a map from a given 2D array.
      * @param data
      */
+
+    /**
+     * Creates a new map from a 2D int array.
+
+     * Uses init(int[][]) to copy and validate the data.
+
+     * @param data source 2D array.
+     */
     public Map(int[][] data)
     {
         init(data);
     }
+
+    /**
+
+     * Initializes this map to size w by h.
+
+     * All cells are set to the value v.
+
+     * @param w map width in cells.
+
+     * @param h map height in cells.
+
+     * @param v initial value for all cells.
+     */
+
     @Override
     public void init(int w, int h, int v)
     {
@@ -57,6 +95,20 @@ public class Map implements Map2D, Serializable
             }
         }
     }
+
+    /**
+
+    * Initializes this map from a 2D int array.
+
+    * Validates that the array is not null, not empty and not ragged.
+
+    * Copies all values into the inner map.
+
+    * @param arr source 2D int array.
+
+    *  @throws RuntimeException if arr is null, empty or ragged.
+     */
+
     @Override
     public void init(int[][] arr) {
         if (arr == null || arr.length == 0) {
@@ -81,6 +133,12 @@ public class Map implements Map2D, Serializable
         }
     }
 
+    /**
+
+     * Returns a deep copy of the inner 2D map.
+
+     * @return new 2D array with the same values as this map.
+     */
     @Override
     public int[][] getMap() {
         int[][] ans = new int[_width][_height];
@@ -92,16 +150,45 @@ public class Map implements Map2D, Serializable
         return ans;
     }
 
+    /**
+
+     * Returns the width of this map in cells.
+
+     * @return map width.
+     */
     @Override
     public int getWidth()
     {
         return _width;
     }
+
+
+
+    /**
+
+     * Returns the height of this map in cells.
+
+     * @return map height.
+     */
     @Override
     public int getHeight()
     {
         return _height;
     }
+
+
+    /**
+
+    * Returns the value of the cell at (x, y).
+
+    * If the coordinates are outside the map, returns -1.
+
+    * @param x x coordinate.
+
+    * @param y y coordinate.
+
+    * @return value at (x, y) or -1 if outside.
+     */
     @Override
     public int getPixel(int x, int y) {
         if (x < 0 || x >= _width || y < 0 || y >= _height)
@@ -110,6 +197,17 @@ public class Map implements Map2D, Serializable
         }
         return _map[x][y];
     }
+
+    /**
+
+     * Returns the value of the cell at the given pixel.
+
+     * If the pixel is null or outside the map, returns -1.
+
+     * @param p pixel position.
+
+     * @return value at p or -1 if outside.
+     */
     @Override
     public int getPixel(Pixel2D p)
     {
@@ -119,6 +217,19 @@ public class Map implements Map2D, Serializable
         }
         return getPixel(p.getX(), p.getY());
     }
+
+    /**
+
+    * Sets the value of the cell at (x, y) to v.
+
+    * If the coordinates are outside the map, does nothing.
+
+    * @param x x coordinate.
+
+    * @param y y coordinate.
+
+    * @param v new value for the cell.
+     */
     @Override
     public void setPixel(int x, int y, int v)
     {
@@ -127,6 +238,17 @@ public class Map implements Map2D, Serializable
         }
         _map[x][y] = v;
     }
+
+    /**
+
+    * Sets the value of the cell at the given pixel to v.
+
+    * If the pixel is null or outside the map, does nothing.
+
+    * @param p pixel position.
+
+    * @param v new value for the cell.
+     */
     @Override
     public void setPixel(Pixel2D p, int v)
     {
@@ -136,6 +258,14 @@ public class Map implements Map2D, Serializable
         setPixel(p.getX(), p.getY(), v);
     }
 
+    /**
+
+    * Checks if the given pixel is inside this map.
+
+    * @param p pixel position.
+
+    * @return true if p is inside the map, false otherwise.
+     */
     @Override
     public boolean isInside(Pixel2D p)
     {
@@ -147,6 +277,14 @@ public class Map implements Map2D, Serializable
         return x >= 0 && x < _width && y >= 0 && y < _height;
     }
 
+    /**
+
+    * Checks if this map and the other map have the same dimensions.
+
+    * @param p other map.
+
+    * @return true if both maps have the same width and height.
+     */
     @Override
     public boolean sameDimensions(Map2D p)
     {
@@ -156,6 +294,14 @@ public class Map implements Map2D, Serializable
         return this.getWidth() == p.getWidth() && this.getHeight() == p.getHeight();
     }
 
+    /**
+
+     * Adds another map to this map cell by cell.
+
+     * If the other map is null or has different dimensions, does nothing.
+
+     * @param p other map to add.
+     */
     @Override
     public void addMap2D(Map2D p)
     {
@@ -170,9 +316,16 @@ public class Map implements Map2D, Serializable
         }
     }
 
+    /**
+
+    * Multiplies all cells in this map by a scalar.
+
+    * The result in each cell is cast to int.
+
+    * @param scalar value to multiply each cell by.
+     */
     @Override
-    public void mul(double scalar)
-    {
+    public void mul(double scalar) {
         for (int x = 0; x < _width; x++) {
             for (int y = 0; y < _height; y++) {
                 _map[x][y] = (int) (_map[x][y] * scalar);
@@ -180,27 +333,185 @@ public class Map implements Map2D, Serializable
         }
     }
 
+
+
+
+
+    /**
+
+    * Resizes this map by scale factors sx and sy.
+
+    * Uses nearest neighbor sampling from the original map.
+
+    * @param sx scale factor in x direction.
+
+    * @param sy scale factor in y direction.
+     */
     @Override
     public void rescale(double sx, double sy) {
+        if (sx <= 0 || sy <= 0) {
+            return;
+        }
+        int newW = (int) Math.round(_width * sx);
+        int newH = (int) Math.round(_height * sy);
+        if (newW <= 0 || newH <= 0) {
+            return;
+        }
+        int[][] newMap = new int[newW][newH];
+
+        for (int x = 0; x < newW; x++) {
+            for (int y = 0; y < newH; y++) {
+                double ox = x / sx;
+                double oy = y / sy;
+                int ix = (int) Math.floor(ox);
+                int iy = (int) Math.floor(oy);
+                if (ix < 0) ix = 0;
+                if (iy < 0) iy = 0;
+                if (ix >= _width) ix = _width - 1;
+                if (iy >= _height) iy = _height - 1;
+                newMap[x][y] = _map[ix][iy];
+            }
+        }
+
+        _width = newW;
+        _height = newH;
+        _map = newMap;
 
     }
 
+    /**
+
+    * Draws a filled circle on this map.
+
+    * All cells with distance from center less than or equal to rad
+
+    * are set to the given color.
+
+    * @param center center of the circle.
+
+    * @param rad radius in cells.
+
+    * @param color value to write in the circle area.
+     */
     @Override
     public void drawCircle(Pixel2D center, double rad, int color) {
-
+        if (center == null || rad < 0) {
+            return;
+        }
+        int cx = center.getX();
+        int cy = center.getY();
+        int rCeil = (int) Math.ceil(rad);
+        for (int x = cx - rCeil; x <= cx + rCeil; x++) {
+            for (int y = cy - rCeil; y <= cy + rCeil; y++) {
+                if (x >= 0 && x < _width && y >= 0 && y < _height) {
+                    double dx = x - cx;
+                    double dy = y - cy;
+                    double dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist <= rad) {
+                        _map[x][y] = color;
+                    }
+                }
+            }
+        }
     }
 
-    @Override
+    /**
+
+     * Draws a discrete line between two pixels on this map.
+
+     * Uses linear interpolation and rounding to set the cells.
+
+     * @param p1 start pixel.
+
+     * @param p2 end pixel.
+
+     * @param color value to write along the line.
+     */
+        @Override
     public void drawLine(Pixel2D p1, Pixel2D p2, int color) {
+        if (p1 == null || p2 == null) {
+            return;
+        }
+        int x1 = p1.getX();
+        int y1 = p1.getY();
+        int x2 = p2.getX();
+        int y2 = p2.getY();
+        double dx = x2 - x1;
+        double dy = y2 - y1;
+        int steps = (int) Math.max(Math.abs(dx), Math.abs(dy));
+        if (steps == 0) {
+            if (x1 >= 0 && x1 < _width && y1 >= 0 && y1 < _height) {
+                _map[x1][y1] = color;
+            }
+            return;
+        }
+        double xInc = dx / steps;
+        double yInc = dy / steps;
 
+        double x = x1;
+        double y = y1;
+        for (int i = 0; i <= steps; i++) {
+            int xi = (int) Math.round(x);
+            int yi = (int) Math.round(y);
+            if (xi >= 0 && xi < _width && yi >= 0 && yi < _height) {
+                _map[xi][yi] = color;
+            }
+            x += xInc;
+            y += yInc;
+        }
     }
 
-    @Override
+    /**
+
+    * Draws a filled axis aligned rectangle between two pixels.
+
+    * All cells inside the rectangle are set to the given color.
+
+    * @param p1 first corner of the rectangle.
+
+    * @param p2 opposite corner of the rectangle.
+
+    * @param color value to write inside the rectangle.
+     */
+        @Override
     public void drawRect(Pixel2D p1, Pixel2D p2, int color) {
+        if (p1 == null || p2 == null) {
+            return;
+        }
+        int x1 = p1.getX();
+        int y1 = p1.getY();
+        int x2 = p2.getX();
+        int y2 = p2.getY();
+        int minX = Math.min(x1, x2);
+        int maxX = Math.max(x1, x2);
+        int minY = Math.min(y1, y2);
+        int maxY = Math.max(y1, y2);
 
+        for (int x = minX; x <= maxX; x++) {
+            for (int y = minY; y <= maxY; y++) {
+                if (x >= 0 && x < _width && y >= 0 && y < _height) {
+                    _map[x][y] = color;
+                }
+            }
+        }
     }
 
-    @Override
+
+
+
+    /**
+
+    * Compares this map to another object.
+
+    * Returns true if the other object is a Map2D
+
+    * with the same dimensions and all values equal.
+
+     * @param ob object to compare with.
+
+    * @return true if maps are equal in size and content.
+     */
+        @Override
     public boolean equals(Object ob)
     {
         if (this == ob) {
@@ -226,6 +537,24 @@ public class Map implements Map2D, Serializable
     /**
      * Fills this map with the new color (new_v) starting from p.
      * https://en.wikipedia.org/wiki/Flood_fill
+     */
+
+
+    /**
+
+    * Fills the connected component of a starting pixel with a new value.
+
+    * The component is defined by cells with the same original value,
+
+    * connected by four neighbors.
+
+    * @param xy start pixel.
+
+    * @param new_v new value for the component.
+
+    * @param cyclic true for cyclic borders, false for normal borders.
+
+    * @return number of cells that were changed.
      */
     public int fill(Pixel2D xy, int new_v,  boolean cyclic)
     {
@@ -289,17 +618,175 @@ public class Map implements Map2D, Serializable
      * BFS like shortest the computation based on iterative raster implementation of BFS, see:
      * https://en.wikipedia.org/wiki/Breadth-first_search
      */
-    public Pixel2D[] shortestPath(Pixel2D p1, Pixel2D p2, int obsColor, boolean cyclic) {
-        Pixel2D[] ans = null;  // the result.
 
-        return ans;
+
+    /**
+
+    * Computes the shortest path between two pixels using BFS.
+
+    * The path avoids cells with the obstacle color.
+
+    * @param p1 start pixel.
+
+    * @param p2 target pixel.
+
+    * @param obsColor obstacle color.
+
+    * @param cyclic true for cyclic borders, false for normal borders.
+
+    * @return array of pixels along the path, or null if no path exists.
+     */
+    public Pixel2D[] shortestPath(Pixel2D p1, Pixel2D p2, int obsColor, boolean cyclic) {
+        if (p1 == null || p2 == null) {
+            return null;
+        }
+        int sx = p1.getX();
+        int sy = p1.getY();
+        int tx = p2.getX();
+        int ty = p2.getY();
+
+        if (!isInside(p1) || !isInside(p2)) {
+            return null;
+        }
+        if (_map[sx][sy] == obsColor || _map[tx][ty] == obsColor) {
+            return null;
+        }
+
+        boolean[][] visited = new boolean[_width][_height];
+        Index2D[][] parent = new Index2D[_width][_height];
+
+        java.util.Queue<Index2D> q = new java.util.LinkedList<>();
+        int[] dx = {1, -1, 0, 0};
+        int[] dy = {0, 0, 1, -1};
+
+        visited[sx][sy] = true;
+        q.add(new Index2D(sx, sy));
+
+        while (!q.isEmpty()) {
+            Index2D cur = q.remove();
+            int cx = cur.getX();
+            int cy = cur.getY();
+
+            if (cx == tx && cy == ty) {
+                break;
+            }
+
+            for (int k = 0; k < 4; k++) {
+                int nx = cx + dx[k];
+                int ny = cy + dy[k];
+
+                if (cyclic) {
+                    if (nx < 0) nx = _width - 1;
+                    if (nx >= _width) nx = 0;
+                    if (ny < 0) ny = _height - 1;
+                    if (ny >= _height) ny = 0;
+                } else {
+                    if (nx < 0 || nx >= _width || ny < 0 || ny >= _height) {
+                        continue;
+                    }
+                }
+
+                if (_map[nx][ny] == obsColor) {
+                    continue;
+                }
+                if (!visited[nx][ny]) {
+                    visited[nx][ny] = true;
+                    parent[nx][ny] = cur;
+                    q.add(new Index2D(nx, ny));
+                }
+            }
+        }
+
+        if (!visited[tx][ty]) {
+            return null;
+        }
+
+        java.util.List<Pixel2D> path = new java.util.ArrayList<>();
+        Index2D step = new Index2D(tx, ty);
+        while (step != null) {
+            path.add(step);
+            step = parent[step.getX()][step.getY()];
+        }
+        java.util.Collections.reverse(path);
+        return path.toArray(new Pixel2D[0]);
     }
+
+
+    /**
+
+    * Computes shortest path distance from a start pixel to all cells.
+
+    * Distances are computed with BFS while avoiding obstacle cells.
+
+    * @param start start pixel.
+
+    * @param obsColor obstacle color.
+
+    * @param cyclic true for cyclic borders, false for normal borders.
+
+    * @return new map with distances, or -1 for unreachable cells.
+     */
+
     @Override
     public Map2D allDistance(Pixel2D start, int obsColor, boolean cyclic) {
-        Map2D ans = null;  // the result.
+        if (start == null) {
+            return null;
+        }
+        int sx = start.getX();
+        int sy = start.getY();
+        if (sx < 0 || sx >= _width || sy < 0 || sy >= _height) {
+            return null;
+        }
+        if (_map[sx][sy] == obsColor) {
+            return null;
+        }
+        int[][] dist = new int[_width][_height];
+        for (int x = 0; x < _width; x++) {
+            for (int y = 0; y < _height; y++) {
+                dist[x][y] = -1;
+            }
+        }
 
-        return ans;
+        Queue<Index2D> q = new LinkedList<>();
+        dist[sx][sy] = 0;
+        q.add(new Index2D(sx, sy));
+
+        int[] dx = {1, -1, 0, 0};
+        int[] dy = {0, 0, 1, -1};
+
+        while (!q.isEmpty()) {
+            Index2D cur = q.remove();
+            int cx = cur.getX();
+            int cy = cur.getY();
+            int cd = dist[cx][cy];
+
+            for (int k = 0; k < 4; k++) {
+                int nx = cx + dx[k];
+                int ny = cy + dy[k];
+
+                if (cyclic) {
+                    if (nx < 0) nx = _width - 1;
+                    if (nx >= _width) nx = 0;
+                    if (ny < 0) ny = _height - 1;
+                    if (ny >= _height) ny = 0;
+                } else {
+                    if (nx < 0 || nx >= _width || ny < 0 || ny >= _height) {
+                        continue;
+                    }
+                }
+
+                if (_map[nx][ny] == obsColor) {
+                    continue;
+                }
+                if (dist[nx][ny] == -1) {
+                    dist[nx][ny] = cd + 1;
+                    q.add(new Index2D(nx, ny));
+                }
+            }
+        }
+
+        return new Map(dist);
     }
-    ////////////////////// Private Methods ///////////////////////
+        ////////////////////// Private Methods ///////////////////////
 
 }
