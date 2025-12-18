@@ -77,10 +77,10 @@ Index2DTest verifies constructors, getters, distance and equals.
 MapTest verifies initialization, equality, drawing operations, fill, shortestPath and allDistance.
 All tests pass before submission.
 
-For Example, Before:
+For Example:
 
 ![img.png](img.png)
 
-After:
+The image shows the shortest path from start (0,0) to  (4,4) avoiding the cells with value 1:
 
 ![img_1.png](img_1.png)
