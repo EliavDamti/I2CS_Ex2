@@ -44,6 +44,25 @@ class MapTest {
         assertEquals(_m0, _m1);
     }
 
+
+
+      //test init by width, height and value
+      //checks dimensions and that all cells are set to v
+
+    @Test
+    void testInitBySizeAndValue() {
+        Map2D m = new Map(3, 4, 7);
+
+        assertEquals(3, m.getWidth());
+        assertEquals(4, m.getHeight());
+
+        for (int x = 0; x < m.getWidth(); x++) {
+            for (int y = 0; y < m.getHeight(); y++) {
+                assertEquals(7, m.getPixel(x, y));
+            }
+        }
+    }
+
     // Test equals before and after init on the same data
     @Test
     void testEquals() {
@@ -238,6 +257,38 @@ class MapTest {
         assertEquals(2, m1.getWidth());
         assertEquals(2, m1.getHeight());
     }
+
+    // test fill: start pixel is painted and count is positive
+    @Test
+    void testFillSimple() {
+        int[][] arr = {
+                {0, 0, 1},
+                {0, 1, 1},
+                {0, 0, 0}
+        };
+        Map2D m = new Map(arr);
+        Pixel2D start = new Index2D(0, 0);
+        int newColor = 5;
+
+        int count = m.fill(start, newColor, false);
+
+        assertTrue(count >= 1);
+        assertEquals(newColor, m.getPixel(start));
+        assertTrue(count <= m.getWidth() * m.getHeight());
+    }
+
+
+
+    // test setpixel and getpixel using a pixel2d object
+    @Test
+    void testSetAndGetPixelByObject() {
+        Map2D m = new Map(3, 3, 0);
+        Pixel2D p = new Index2D(1, 2);
+
+        m.setPixel(p, 7);
+        assertEquals(7, m.getPixel(p));
+    }
+
 
     // test mul multiplies all cells by scalar 2.0
     @Test

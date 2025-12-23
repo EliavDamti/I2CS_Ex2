@@ -533,7 +533,7 @@ public class Map implements Map2D, Serializable
         }
         return true;
     }
-    @Override
+
     /**
      * Fills this map with the new color (new_v) starting from p.
      * https://en.wikipedia.org/wiki/Flood_fill
@@ -556,6 +556,7 @@ public class Map implements Map2D, Serializable
 
     * @return number of cells that were changed.
      */
+    @Override
     public int fill(Pixel2D xy, int new_v,  boolean cyclic)
     {
         if (xy == null) {
@@ -613,7 +614,7 @@ public class Map implements Map2D, Serializable
 
     }
 
-    @Override
+
     /**
      * BFS like shortest the computation based on iterative raster implementation of BFS, see:
      * https://en.wikipedia.org/wiki/Breadth-first_search
@@ -636,6 +637,7 @@ public class Map implements Map2D, Serializable
 
     * @return array of pixels along the path, or null if no path exists.
      */
+    @Override
     public Pixel2D[] shortestPath(Pixel2D p1, Pixel2D p2, int obsColor, boolean cyclic) {
         if (p1 == null || p2 == null) {
             return null;

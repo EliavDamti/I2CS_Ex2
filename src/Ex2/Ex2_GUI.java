@@ -48,7 +48,7 @@ public class Ex2_GUI {
             }
         }
 
-// grid lines
+
         StdDraw.setPenColor(Color.GRAY);
         for (int x = 0; x <= w; x++) {
             StdDraw.line(x, 0, x, h);
@@ -81,7 +81,7 @@ public class Ex2_GUI {
             case 4:
                 return Color.BLUE;
             default:
-                // other values set to be grey,
+                // other values set to grey,
                 int g = 200;
                 return new Color(g, g, g);
         }
@@ -184,23 +184,67 @@ public class Ex2_GUI {
         if (map == null) {
             return;
         }
-
-
         drawMap(map);
+        interactiveShortestPath(map);
     }
 
-    //example: draw shortest path on the map
-// Pixel2D start = new Index2D(0, 0);
-// Pixel2D end = new Index2D(4, 4);
-// int obstacleColor = 1;
-// Pixel2D[] path = map.shortestPath(start, end, obstacleColor, false);
-// if (path != null) {
-//     for (int i = 0; i < path.length; i++)
-//     {
-//         Pixel2D p = path[i];
-//         map.setPixel(p, 4);
-//     }
-// }
+    /**
+     * waits for two mouse clicks on the map
+     * computes shortest path between them
+     * colors the path and redraws the map
+     */
+    private static void interactiveShortestPath(Map2D map) {
+        int obsColor = 1;
+        int pathColor = 4;
+
+        Pixel2D start = waitForClick(map);
+        if (start == null) {
+            return;
+        }
+
+        Pixel2D end = waitForClick(map);
+        if (end == null) {
+            return;
+        }
+
+        Pixel2D[] path = map.shortestPath(start, end, obsColor, false);
+        if (path != null) {
+            for (Pixel2D p : path) {
+                map.setPixel(p, pathColor);
+            }
+            drawMap(map);
+        }
+    }
+
+    /**
+     * waits for a single mouse click on the canvas
+     * converts the click position to a Pixel2D in map coordinates
+     */
+    private static Pixel2D waitForClick(Map2D map) {
+        int w = map.getWidth();
+        int h = map.getHeight();
+
+        while (!StdDraw.isMousePressed()) {
+            StdDraw.pause(20);
+        }
+        double x = StdDraw.mouseX();
+        double y = StdDraw.mouseY();
+
+        while (StdDraw.isMousePressed()) {
+            StdDraw.pause(20);
+        }
+
+        int ix = (int) x;
+        int iyScreen = (int) y;
+        if (ix < 0 || ix >= w || iyScreen < 0 || iyScreen >= h) {
+            return null;
+        }
+
+        int iyMap = h - 1 - iyScreen;
+        return new Index2D(ix, iyMap);
+    }
+
+
 
 
 }

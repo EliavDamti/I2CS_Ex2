@@ -81,6 +81,6 @@ For Example:
 
 ![img.png](img.png)
 
-The image shows the shortest path from start (0,0) to  (4,4) avoiding the cells with value 1:
+The image shows the shortest path from start (0,0) to  (4,4) avoiding the cells with value of 1:
 
 ![img_1.png](img_1.png)
