@@ -167,7 +167,7 @@ public class Ex2_GUI {
                 pw.println(sb.toString());
             }
         } catch (IOException e) {
-// ignore write errors
+
         }
     }
 

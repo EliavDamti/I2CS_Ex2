@@ -277,6 +277,37 @@ class MapTest {
         assertTrue(count <= m.getWidth() * m.getHeight());
     }
 
+    // test setPixel(Pixel2D, int) and getPixel(Pixel2D)
+    @Test
+    void testSetPixelWithPixel2D() {
+        int[][] arr = new int[3][3];
+        Map2D m = new Map(arr);
+        Pixel2D p = new Index2D(1, 2);
+
+        m.setPixel(p, 7);
+
+        assertEquals(7, m.getPixel(p));
+        assertEquals(0, m.getPixel(0, 0));
+    }
+
+    // test fill on a simple full map
+    @Test
+    void testFillSimpleAllMap() {
+        int[][] arr = new int[3][3];
+        Map2D m = new Map(arr);
+        Pixel2D start = new Index2D(1, 1);
+
+        int count = m.fill(start, 5, false);
+
+        assertEquals(9, count);
+        for (int x = 0; x < m.getWidth(); x++) {
+            for (int y = 0; y < m.getHeight(); y++) {
+                assertEquals(5, m.getPixel(x, y));
+            }
+        }
+    }
+
+
 
 
     // test setpixel and getpixel using a pixel2d object
